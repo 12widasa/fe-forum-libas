@@ -63,39 +63,54 @@
             }
         }
     </style>
-        <div class="cards bg-dark-gray text-white">
-            <div class="d-flex align-items-center ">
-                <img src="{{ asset('assets/images/avatar.png') }}" class="logo-avatar">
-                <div class="d-flex flex-column ms-3">
-                    <span>Muhammad rafli hamdani</span>
-                    <span>24 jam yang lalu</span>
-                </div>
-            </div>
-            <div>
-                <p class="mt-1">Bagi bagi kaos, baru buka distro soalnya </p>
-                <img src="{{ asset('assets/images/content.jpg') }}" class="img-content">
-                <div class="btn-group-topics">
-                    <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>Menyukai</button>
-                    <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>Komentar</button>
-                    <button class="btn-topics"><i class="fa-solid fa-share me-2"></i>Bagikan</button>
-                </div>
-            </div>
-        </div>
+    <div id="feeds">
+
+    </div>
         <script>
+
+            const feeds = document.querySelector('#feeds')
             const getAllFeeds = () => {
                 const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_all_feed_web.php?page=1&type=BANKOM`
-                fetch(linkAllFeeds,
-                {
-                    method:'GET'
-                })
+
+                fetch(linkAllFeeds)
                 .then((response) =>  {
                     return response.json();
                 }).then((responseJson) => {
-                    console.log(responseJson);
-                    // setAllFeed(responseJson)
+                    // console.log(responseJson.data);
+                    console.log(responseJson.feed);
+                    const data = responseJson.feed;
+                    showFeed(data)
+
+
                 }).catch((err) => {
                     console.log(error)
                 })
+            }
+
+            const showFeed = Feed => {
+                feeds.innerHTML = "";
+                    Feed.forEach(item => {
+                        feeds.innerHTML += `
+                            <div class="cards bg-dark-gray text-white">
+                                <div class="d-flex align-items-center ">
+                                    <img src="{{ asset('assets/images/avatar.png') }}" class="logo-avatar">
+                                    <div class="d-flex flex-column ms-3">
+                                        <span>${item.user_detail.name}</span>
+                                        <span>24 jam yang lalu</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="mt-1">${item.caption}</p>
+                                    <img src="http://api-feed.pcctabessmg.xyz/files/${item.file}" class="img-content">
+                                    <div class="btn-group-topics">
+                                        <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>Menyukai</button>
+                                        <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>Komentar</button>
+                                        <button class="btn-topics"><i class="fa-solid fa-share me-2"></i>Bagikan</button>
+                                    </div>
+                                </div>
+                            </div>  
+                        `
+                    }); 
             }
 
             document.addEventListener("DOMContentLoaded", getAllFeeds);
