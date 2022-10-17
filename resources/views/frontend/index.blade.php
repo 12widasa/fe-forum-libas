@@ -13,7 +13,9 @@
         }
 
         .logo-avatar {
-            width: 35px
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
         }
         .img-content {
             width: 100%;
@@ -95,7 +97,7 @@
                 let content = feed.file ? `<img src="${urlContent}${feed.file}" class="img-content">` : ''
                 let date = moment(feed.created_at).locale('id').fromNow()
                 if(feed.jenis === 'FEED_VIDEO') {
-                    content = `<video width="400" controls>
+                    content = `<video class="img-content" controls>
                                     <source src="${urlContent}${feed.file}" type="video/mp4">
                                     Your browser does not support HTML video.
                                 </video>`
@@ -113,8 +115,8 @@
                                     <p class="mt-1">${feed.caption}</p>
                                     ${content}
                                     <div class="btn-group-topics">
-                                        <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>Menyukai</button>
-                                        <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>Komentar</button>
+                                        <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>${feed.like}</button>
+                                        <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
                                         <button class="btn-topics"><i class="fa-solid fa-share me-2"></i>Bagikan</button>
                                     </div>
                                 </div>
