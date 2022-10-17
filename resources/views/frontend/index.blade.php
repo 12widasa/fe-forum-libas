@@ -9,7 +9,7 @@
             margin: 1.5rem 0;
         }
         .bg-dark-gray {
-            background: #333333;    
+            background: #333333;
         }
 
         .logo-avatar {
@@ -48,12 +48,12 @@
             .topics {
                 padding: 0 10%;
             }
-        } 
+        }
         @media only screen and (min-width: 768px) {
             .topics {
                 padding: 0 15%;
             }
-        } 
+        }
         @media only screen and (min-width: 992px) {
             .topics {
                 padding: 0 20%;
@@ -67,7 +67,6 @@
 
     </div>
         <script>
-
             const feeds = document.querySelector('#feeds')
             const getAllFeeds = () => {
                 const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_all_feed_web.php?page=1&type=BANKOM`
@@ -76,46 +75,53 @@
                 .then((response) =>  {
                     return response.json();
                 }).then((responseJson) => {
-                    // console.log(responseJson.data);
-                    console.log(responseJson.feed);
                     const data = responseJson.feed;
                     showFeed(data)
-
-
                 }).catch((err) => {
                     console.log(error)
                 })
             }
 
             const showFeed = Feed => {
-                feeds.innerHTML = "";
                     Feed.forEach(item => {
-                        feeds.innerHTML += `
-                            <div class="cards bg-dark-gray text-white">
+                        var html = createFeed(item)
+                        feeds.innerHTML += html;
+                    });
+            }
+
+            const createFeed = feed => {
+                const urlContent = 'http://api-feed.pcctabessmg.xyz/files/'
+                let content = `<img src="${urlContent}${feed.file}" class="img-content">`
+                if(feed.jenis === 'FEED_VIDEO') {
+                    content = `<video width="400" controls>
+                                    <source src="${urlContent}${feed.file}" type="video/mp4">
+                                    Your browser does not support HTML video.
+                                </video>`
+                }
+
+                return `<div class="cards bg-dark-gray text-white">
                                 <div class="d-flex align-items-center ">
-                                    <img src="https://api.pcctabessmg.xyz/${item.user_detail.avatar}" class="logo-avatar">
+                                    <img src="https://api.pcctabessmg.xyz/${feed.user_detail.avatar}" class="logo-avatar">
                                     <div class="d-flex flex-column ms-3">
-                                        <span>${item.user_detail.name}</span>
+                                        <span>${feed.user_detail.name}</span>
                                         <span>24 jam yang lalu</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="mt-1">${item.caption}</p>
-                                    <img src="http://api-feed.pcctabessmg.xyz/files/${item.file}" class="img-content">
+                                    <p class="mt-1">${feed.caption}</p>
+                                    ${content}
                                     <div class="btn-group-topics">
                                         <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>Menyukai</button>
                                         <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>Komentar</button>
                                         <button class="btn-topics"><i class="fa-solid fa-share me-2"></i>Bagikan</button>
                                     </div>
                                 </div>
-                            </div>  
-                        `
-                    }); 
+                            </div>`
             }
 
             document.addEventListener("DOMContentLoaded", getAllFeeds);
         </script>
 
 </section>
-    
+
 @endsection
