@@ -86,13 +86,7 @@
                 const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_all_feed_web.php?page=1&type=BANKOM`
                 fetch(linkAllFeeds,
                 {
-                    method:'GET',
-                    headers: {
-                        'iduser': '00095210-0f39-49ff-b19d-cef749a6cf68',
-                        'token': '$2y$10$f4JcXJBRfkixBGw2D6fYq.XrjL8xxFUjScQ4E8wOdl6oiimdxV7gy',
-                        'Content-Type' : 'application/json',
-                        'page': '1'
-                    }
+                    method:'GET'
                 })
                 .then((response) =>  {
                     return response.json();
