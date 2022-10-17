@@ -93,7 +93,7 @@
                         feeds.innerHTML += `
                             <div class="cards bg-dark-gray text-white">
                                 <div class="d-flex align-items-center ">
-                                    <img src="{{ asset('assets/images/avatar.png') }}" class="logo-avatar">
+                                    <img src="https://api.pcctabessmg.xyz/${item.user_detail.avatar}" class="logo-avatar">
                                     <div class="d-flex flex-column ms-3">
                                         <span>${item.user_detail.name}</span>
                                         <span>24 jam yang lalu</span>
