@@ -83,7 +83,7 @@
         </div>
         <script>
             const getAllFeeds = () => {
-                const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_all_feed.php`
+                const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_all_feed_web.php?page=1&type=BANKOM`
                 fetch(linkAllFeeds,
                 {
                     method:'GET',
