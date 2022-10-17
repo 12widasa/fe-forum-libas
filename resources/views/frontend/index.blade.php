@@ -91,7 +91,8 @@
 
             const createFeed = feed => {
                 const urlContent = 'http://api-feed.pcctabessmg.xyz/files/'
-                let content = `<img src="${urlContent}${feed.file}" class="img-content">`
+                let avatar = feed.user_detail.avatar ? `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}` : '/assets/images/img_profil_default.png'
+                let content = feed.file ? `<img src="${urlContent}${feed.file}" class="img-content">` : ''
                 if(feed.jenis === 'FEED_VIDEO') {
                     content = `<video width="400" controls>
                                     <source src="${urlContent}${feed.file}" type="video/mp4">
@@ -101,7 +102,7 @@
 
                 return `<div class="cards bg-dark-gray text-white">
                                 <div class="d-flex align-items-center ">
-                                    <img src="https://api.pcctabessmg.xyz/${feed.user_detail.avatar}" class="logo-avatar">
+                                    <img src="${avatar}" class="logo-avatar">
                                     <div class="d-flex flex-column ms-3">
                                         <span>${feed.user_detail.name}</span>
                                         <span>24 jam yang lalu</span>
