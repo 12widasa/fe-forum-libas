@@ -64,11 +64,11 @@
         }
     </style>
     <div id="feeds">
-
     </div>
         <script>
             const feeds = document.querySelector('#feeds')
             const getAllFeeds = () => {
+                console.log( moment.localeData('en').longDateFormat('L') );
                 const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_all_feed_web.php?page=1&type=BANKOM`
 
                 fetch(linkAllFeeds)
@@ -93,6 +93,7 @@
                 const urlContent = 'http://api-feed.pcctabessmg.xyz/files/'
                 let avatar = feed.user_detail.avatar ? `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}` : '/assets/images/img_profil_default.png'
                 let content = feed.file ? `<img src="${urlContent}${feed.file}" class="img-content">` : ''
+                let date = moment(feed.created_at).locale('id').fromNow()
                 if(feed.jenis === 'FEED_VIDEO') {
                     content = `<video width="400" controls>
                                     <source src="${urlContent}${feed.file}" type="video/mp4">
@@ -105,7 +106,7 @@
                                     <img src="${avatar}" class="logo-avatar">
                                     <div class="d-flex flex-column ms-3">
                                         <span>${feed.user_detail.name}</span>
-                                        <span>24 jam yang lalu</span>
+                                        <span>${date}</span>
                                     </div>
                                 </div>
                                 <div>
