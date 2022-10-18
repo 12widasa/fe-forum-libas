@@ -1,49 +1,28 @@
-// navbar
-let answers = [];
 let currentPage = 1;
-let data = JSON.parse(localStorage.getItem("data"));
-let filterType = [
-    "ALL",
-    "PEMILU",
-    "ORMAS",
-    "DPO",
-    "3 PILAR",
-    "LTC",
-    "UMUM",
-    "PPA",
-    "POLSUS",
-    "BANKOM",
-    "OJOL",
-    "ZEBRA TRAINING CENTER",
-];
-
-const getNavFeeds = () => {
-    fetch(
-        `http://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=1&keyword=Semarang&type=${filterType}`
-        // `http://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=1&keyword=Semarang&type=BANKOM`
-    )
-        .then((response) => {
-            return response.json();
-        })
-        .then((responseJson) => {
-            console.log(responseJson.feed);
-            const Navdata = responseJson.feed;
-            // showListExam(data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-};
-
-const getAnswer = (value) => {
-    getNavFeeds();
-};
-
-// index
-
+let type = "";
+let keyword = "";
+const search = document.querySelector("#search");
 const feeds = document.querySelector("#feeds");
+const feedEmpty = document.querySelector("#feed-empty");
+
+// Search feed
+const searchFeed = (e) => {
+    e.preventDefault();
+    feeds.innerHTML = "";
+    keyword = search.value;
+    getAllFeeds();
+};
+
+// Filter by type
+const getType = (value) => {
+    feeds.innerHTML = "";
+    type = value;
+    getAllFeeds();
+};
+
 const getAllFeeds = () => {
-    const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_all_feed_web.php?page=1&type=BANKOM`;
+    feedEmpty.innerHTML = "";
+    const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=${currentPage}&keyword=${keyword}&type=${type}`;
 
     fetch(linkAllFeeds)
         .then((response) => {
@@ -51,6 +30,10 @@ const getAllFeeds = () => {
         })
         .then((responseJson) => {
             const data = responseJson.feed;
+            if (data.length === 0) {
+                feedEmpty.innerHTML +=
+                    "<p class='text-white'>Tidak ada feed</p>";
+            }
             showFeed(data);
         })
         .catch((err) => {
@@ -67,13 +50,14 @@ const showFeed = (Feed) => {
 
 const createFeed = (feed) => {
     const urlContent = "http://api-feed.pcctabessmg.xyz/files/";
-    let avatar = feed.user_detail.avatar
-        ? `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}`
-        : "/assets/images/img_profil_default.png";
-    let content = feed.file
-        ? `<img src="${urlContent}${feed.file}" class="img-content">`
-        : "";
+    let avatar = feed.user_detail.avatar ?
+        `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}` :
+        "/assets/images/img_profil_default.png";
+    let content = feed.file ?
+        `<img src="${urlContent}${feed.file}" class="img-content">` :
+        "";
     let date = moment(feed.created_at).locale("id").fromNow();
+
     if (feed.jenis === "FEED_VIDEO") {
         content = `<video class="img-content" controls>
                         <source src="${urlContent}${feed.file}" type="video/mp4">
@@ -95,13 +79,21 @@ const createFeed = (feed) => {
                         <div class="btn-group-topics">
                             <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>${feed.like}</button>
                             <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
-                            <button class="btn-topics"><i class="fa-solid fa-share me-2"></i>Bagikan</button>
                         </div>
                     </div>
                 </div>`;
 };
 
+window.addEventListener("scroll", () => {
+    if (
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight
+    ) {
+        currentPage++;
+        getAllFeeds();
+    }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     getAllFeeds();
-    getNavFeeds();
 });
