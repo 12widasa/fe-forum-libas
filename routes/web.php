@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'index']);
+Route::get('/detailed', [App\Http\Controllers\FrontendController::class, 'detailed']);

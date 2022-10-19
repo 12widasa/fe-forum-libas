@@ -10,4 +10,8 @@ class FrontendController extends Controller
     {
         return view('frontend.index');
     }
+    public function detailed()
+    {
+        return view('frontend.detailed');
+    }
 }

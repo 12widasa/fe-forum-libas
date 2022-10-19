@@ -15,6 +15,7 @@
 
         <main class="">
             @yield('content')
+            @yield('detailed')
         </main>
     </div>
     <style>
