@@ -22,7 +22,7 @@ const getType = (value) => {
 
 const getAllFeeds = () => {
     feedEmpty.innerHTML = "";
-    const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=${currentPage}&keyword=${keyword}&type=${type}`;
+    const linkAllFeeds = `https://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=${currentPage}&keyword=${keyword}&type=${type}`;
 
     fetch(linkAllFeeds)
         .then((response) => {
@@ -49,7 +49,7 @@ const showFeed = (Feed) => {
 };
 
 const createFeed = (feed) => {
-    const urlContent = "http://api-feed.pcctabessmg.xyz/files/";
+    const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
     let avatar = feed.user_detail.avatar ?
         `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}` :
         "/assets/images/img_profil_default.png";
