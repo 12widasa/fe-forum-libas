@@ -37,6 +37,17 @@
             gap: 1rem;
         }
 
+        .topics {
+            margin: 2rem 0 2rem 0;
+            padding-bottom: 2rem;
+        }
+
+        #feed-empty {
+            text-align: center;
+            margin: 10rem 0;
+            font-size: 20px;
+        }
+
         @media only screen and (max-width: 600px) {
             .topics {
                 padding: 0 7%;
@@ -67,6 +78,7 @@
     </style>
     <div id="feeds">
     </div>
+    <div id="feed-empty"></div>
 
 </section>
 
