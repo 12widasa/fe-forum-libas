@@ -30,13 +30,15 @@
         }
         .btn-nav {
             border-radius: 10px;
-            min-width: 5.2rem;
             background-color: #333333;
             color: white;
             border: none;
-            padding: 0.5rem 0;
+            padding: 0.5rem 0.8rem;
         }
         .btn-nav:hover {
+            background-color: #fedf2c;
+        }
+        .active {
             background-color: #fedf2c;
         }
         .btn-outline-success {
@@ -99,13 +101,12 @@
               <form class="d-flex" role="search">
                 <input id="search" class="form-control me-2" placeholder="Search" aria-label="Search">
                 <button onclick="searchFeed(event)" type="submit" class="btn btn-outline-success">Search</button>
-                <button onclick="refresh()" type="button" class="btn btn-outline-success ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                <button onclick="refresh(event)" type="button" class="btn btn-outline-success ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
 
               </form>
             </div>
             <div class="btn-group" id="btn-group-highlight">
-
-                <button onclick="getType('')"  class="btn-nav"  >
+                <button onclick="getType('')"  class="btn-nav active"  >
                     ALL
                 </button>
                 <button onclick="getType('DPO')" class="btn-nav"  >
@@ -138,18 +139,6 @@
             </div>
         </nav>
     </div>
-    <script
-			  src="https://code.jquery.com/jquery-3.6.1.js"
-			  integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-			  crossorigin="anonymous">
-    </script>
-        <script type="text/javascript">
-        const refresh = (e) => {
-            e.preventDefault();
-            feeds.innerHTML = "";
-            getAllFeeds();
-        };
-        </script>
 </section>
 
 
