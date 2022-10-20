@@ -15,6 +15,9 @@
         .btn-group-nav {
             display: flex;
             justify-content: center;
+            height: 13rem;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
         }
 
         .btn-group {
@@ -23,6 +26,7 @@
             overflow-x: auto;
             padding: 0 12px;
             margin-top: 1rem;
+            padding-bottom: 2rem;
         }
         .btn-nav {
             border-radius: 10px;
@@ -83,7 +87,7 @@
         }
         </style>
     <div class="global-navbar">
-        <nav class="navbar py-3 btn-group-nav" >
+        <nav class="navbar btn-group-nav" >
             <div class="container-fluid nav-up">
                 <div class="img d-flex align-items-center me-3">
                     <img src="{{ asset('assets/images/logo.png') }}" class="img-responsive" alt="" >
@@ -95,9 +99,11 @@
               <form class="d-flex" role="search">
                 <input id="search" class="form-control me-2" placeholder="Search" aria-label="Search">
                 <button onclick="searchFeed(event)" type="submit" class="btn btn-outline-success">Search</button>
+                <button onclick="refresh()" type="button" class="btn btn-outline-success ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+
               </form>
             </div>
-            <div class="btn-group  ">
+            <div class="btn-group" id="btn-group-highlight">
 
                 <button onclick="getType('')"  class="btn-nav"  >
                     ALL
@@ -129,13 +135,21 @@
                 <button onclick="getType('ZEBRA TRAINING CENTER')" class="btn-nav">
                     ZEBRA TRAINING CENTER
                 </button>
-
             </div>
         </nav>
     </div>
-        <script>
-
-
-
+    <script
+			  src="https://code.jquery.com/jquery-3.6.1.js"
+			  integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+			  crossorigin="anonymous">
+    </script>
+        <script type="text/javascript">
+        const refresh = (e) => {
+            e.preventDefault();
+            feeds.innerHTML = "";
+            getAllFeeds();
+        };
         </script>
 </section>
+
+

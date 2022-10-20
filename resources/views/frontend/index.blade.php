@@ -48,6 +48,19 @@
             font-size: 20px;
         }
 
+        #btn-back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            border: 1px solid #ffcb22;
+            background-color: #FFCC22;
+            border-radius: 50%;
+        }
+
+        #btn-back-to-top:hover {
+            background: #FFC400;
+        }
         @media only screen and (max-width: 600px) {
             .topics {
                 padding: 0 7%;
@@ -75,10 +88,18 @@
             padding: 2rem;
             }
         }
+
     </style>
     <div id="feeds">
     </div>
     <div id="feed-empty"></div>
+    <button
+            type="button"
+            class="btn btn-danger btn-floating btn-lg"
+            id="btn-back-to-top"
+            >
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
 </section>
 
