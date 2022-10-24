@@ -94,8 +94,10 @@
             }
         }
     </style>
-        <div id="detail-feeds">
+        <div>
             <div class="bg">
+                 <div id="detail-feeds">
+             </div>
                 <div class="d-flex justify-content-between align-items-start">
                     <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
                 </div>
@@ -122,17 +124,16 @@
                 return response.json();
             })
             .then((responseJson) => {
-                // debugger
-                const data = responseJson.feed;
-                console.log(data)
-                showDetailfeeds(data)
+                const data = responseJson.feed[0]
+                var html = showDetailfeeds(data);
+                Detailfeeds.innerHTML += html;
             })
             .catch((err) => {
                 console.log(error);
             });
     };
 
-    const showDetailfeeds = (Detailfeeds) => {
+    const showDetailfeeds = (feed) => {
     const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
     let avatar = Detailfeeds.user_detail.avatar
         ? `https://api.pcctabessmg.xyz/${Detailfeeds.user_detail.avatar}`
