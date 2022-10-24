@@ -122,8 +122,10 @@
                 return response.json();
             })
             .then((responseJson) => {
+                // debugger
                 const data = responseJson.feed;
                 console.log(data)
+                showDetailfeeds(data)
             })
             .catch((err) => {
                 console.log(error);
@@ -132,17 +134,17 @@
 
     const showDetailfeeds = (Detailfeeds) => {
     const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
-    let avatar = feed.user_detail.avatar
-        ? `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}`
+    let avatar = Detailfeeds.user_detail.avatar
+        ? `https://api.pcctabessmg.xyz/${Detailfeeds.user_detail.avatar}`
         : "/assets/images/img_profil_default.png";
-    let content = feed.file
-        ? `<img src="${urlContent}${feed.file}" class="img-content">`
+    let content = Detailfeeds.file
+        ? `<img src="${urlContent}${Detailfeeds.file}" class="img-content">`
         : "";
-    let date = moment(feed.created_at).locale("id").fromNow();
+    let date = moment(Detailfeeds.created_at).locale("id").fromNow();
 
-    if (feed.jenis === "FEED_VIDEO") {
+    if (Detailfeeds.jenis === "FEED_VIDEO") {
         content = `<video class="img-content" controls>
-                        <source src="${urlContent}${feed.file}" type="video/mp4">
+                        <source src="${urlContent}${Detailfeeds.file}" type="video/mp4">
                         Your browser does not support HTML video.
                     </video>`;
     }
@@ -152,17 +154,17 @@
                     <div class="d-flex align-items-center ">
                         <img src="${avatar}" class="logo-avatar">
                         <div class="d-flex flex-column ms-3">
-                            <span>${feed.user_detail.name}</span>
+                            <span>${Detailfeeds.user_detail.name}</span>
                             <span>${date}</span>
                         </div>
                     </div>
                     <div>
-                        <p class="mt-1">${feed.caption}</p>
+                        <p class="mt-1">${Detailfeeds.caption}</p>
                         <img src="{{ asset('assets/images/content.jpg') }}" class="img-content"/>
                         ${content}
                         <div class="btn-group-topics">
-                            <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>${feed.like}</button>
-                            <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
+                            <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>${Detailfeeds.like}</button>
+                            <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${Detailfeeds.comment_count}</button>
                         </div>
                     </div>
                 </div>
