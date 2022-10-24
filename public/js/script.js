@@ -5,33 +5,6 @@ const search = document.querySelector("#search");
 const feeds = document.querySelector("#feeds");
 const feedEmpty = document.querySelector("#feed-empty");
 
-// detail feed
-
-let idFeed = 2522;
-const Detailfeeds = document.querySelector("#detail-feeds");
-
-const getDetailedFeeds = () => {
-    feedEmpty.innerHTML = "";
-    const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=${idFeed}`;
-
-    fetch(linkDetailFeeds)
-        .then((response) => {
-            return response.json();
-        })
-        .then((responseJson) => {
-            const dataDetail = responseJson.feed[0].id_feed;
-            console.log(dataDetail);
-            // if (data.length === 0) {
-            //     feedEmpty.innerHTML +=
-            //         "<p class='text-white'>Tidak ada feed</p>";
-            // }
-            // mybutto(dataDetail);
-        })
-        .catch((err) => {
-            console.log(error);
-        });
-};
-
 // Search feed
 const searchFeed = (e) => {
     e.preventDefault();
@@ -45,23 +18,6 @@ const getType = (value) => {
     feeds.innerHTML = "";
     type = value;
     getAllFeeds();
-};
-
-const getDetailFeed = () => {
-    feedEmpty.innerHTML = "";
-    const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
-
-    fetch(linkAllFeeds)
-        .then((response) => {
-            return response.json();
-        })
-        .then((responseJson) => {
-            const data = responseJson.feed;
-            console.log(data)
-        })
-        .catch((err) => {
-            console.log(error);
-        });
 };
 
 const getAllFeeds = () => {
@@ -84,8 +40,6 @@ const getAllFeeds = () => {
             console.log(error);
         });
 };
-
-
 
 const showFeed = (Feed) => {
     Feed.forEach((item) => {
@@ -194,6 +148,4 @@ for (var i = 0; i < btns.length; i++) {
 
 document.addEventListener("DOMContentLoaded", () => {
     getAllFeeds();
-    getDetailFeed()
-    getDetailedFeeds();
 });
