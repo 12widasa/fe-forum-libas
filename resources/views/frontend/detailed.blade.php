@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('detailed')
+@section('content')
 
 <section class=" topics">
     <style>
@@ -94,11 +94,63 @@
             }
         }
     </style>
-    <div id="detail-feeds">
-        <div class=" bg-dark-gray text-white">
-            <div class="cards">
+        <div id="detail-feeds">
+            <div class="bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
+                </div>
+                <div class="text-center comment">
+                    <i class="fa-solid fa-comments"></i>
+                    <p>Belum Ada Komentar</p>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+@endsection
+
+@section('js') 
+<script type="text/javascript">
+
+    const Detailfeeds = document.querySelector("#detail-feeds");
+    const getDetailfeeds = () => {
+    const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
+
+    fetch(linkDetailFeeds)
+        .then((response) => {
+            return response.json();
+        })
+        .then((responseJson) => {
+            const data = responseJson.feed;
+            console.log(data)
+        })
+        .catch((err) => {
+            console.log(error);
+        });
+    };
+
+    const showDetailfeeds = (Detailfeeds) => {
+    const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
+    let avatar = feed.user_detail.avatar
+        ? `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}`
+        : "/assets/images/img_profil_default.png";
+    let content = feed.file
+        ? `<img src="${urlContent}${feed.file}" class="img-content">`
+        : "";
+    let date = moment(feed.created_at).locale("id").fromNow();
+
+    if (feed.jenis === "FEED_VIDEO") {
+        content = `<video class="img-content" controls>
+                        <source src="${urlContent}${feed.file}" type="video/mp4">
+                        Your browser does not support HTML video.
+                    </video>`;
+    }
+
+    return `<div class=" bg-dark-gray text-white"> 
+                <div class="cards">
                     <div class="d-flex align-items-center ">
-                        <img src="{{ asset('assets/images/content.jpg') }}" class="logo-avatar">
+                        <img src="${avatar}" class="logo-avatar">
                         <div class="d-flex flex-column ms-3">
                             <span>${feed.user_detail.name}</span>
                             <span>${date}</span>
@@ -113,43 +165,15 @@
                             <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
                         </div>
                     </div>
-            </div>
-            <div class="bg">
-                <div class="d-flex justify-content-between align-items-start">
-                    <p>Semua Komentar</p>                        <i class="fa-solid fa-comment-dots comment-dots"></i>
                 </div>
-                <div class="text-center comment">
-                    <i class="fa-solid fa-comments"></i>
-                    <p>Belum Ada Komentar</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-<script>
-    const getDetailFeed = () => {
-    feedEmpty.innerHTML = "";
-    const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
-
-    fetch(linkAllFeeds)
-        .then((response) => {
-            return response.json();
-        })
-        .then((responseJson) => {
-            const data = responseJson.feed;
-            console.log(data);
-        })
-        .catch((err) => {
-            console.log(error);
-        });
+            </div>`;
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    getDetailFeed();
-})
+    getDetailfeeds();
+});
 
 </script>
 
 @endsection
+

@@ -20,6 +20,23 @@ const getType = (value) => {
     getAllFeeds();
 };
 
+// const getDetailFeed = () => {
+//     feedEmpty.innerHTML = "";
+//     const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
+
+//     fetch(linkAllFeeds)
+//         .then((response) => {
+//             return response.json();
+//         })
+//         .then((responseJson) => {
+//             const data = responseJson.feed;
+//             console.log(data)
+//         })
+//         .catch((err) => {
+//             console.log(error);
+//         });
+// };
+
 const getAllFeeds = () => {
     feedEmpty.innerHTML = "";
     const linkAllFeeds = `https://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=${currentPage}&keyword=${keyword}&type=${type}`;
@@ -148,4 +165,6 @@ for (var i = 0; i < btns.length; i++) {
 
 document.addEventListener("DOMContentLoaded", () => {
     getAllFeeds();
+    // getDetailFeed();
+    // getDetailedFeeds();
 });
