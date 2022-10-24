@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('detailed')
+@section('content')
 
 <section class=" topics">
     <style>
@@ -150,3 +150,28 @@
 </section>
 
 @endsection
+
+@section('js') 
+<script type="text/javascript">
+    const getDetailFeed = () => {
+    const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
+
+    fetch(linkAllFeeds)
+        .then((response) => {
+            return response.json();
+        })
+        .then((responseJson) => {
+            const data = responseJson.feed;
+            console.log(data)
+        })
+        .catch((err) => {
+            console.log(error);
+        });
+    };
+
+    getDetailFeed()
+
+</script>
+
+@endsection
+
