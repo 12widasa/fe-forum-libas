@@ -5,6 +5,33 @@ const search = document.querySelector("#search");
 const feeds = document.querySelector("#feeds");
 const feedEmpty = document.querySelector("#feed-empty");
 
+// detail feed
+
+let idFeed = 2522;
+const Detailfeeds = document.querySelector("#detail-feeds");
+
+const getDetailedFeeds = () => {
+    feedEmpty.innerHTML = "";
+    const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=${idFeed}`;
+
+    fetch(linkDetailFeeds)
+        .then((response) => {
+            return response.json();
+        })
+        .then((responseJson) => {
+            const dataDetail = responseJson.feed[0].id_feed;
+            console.log(dataDetail);
+            // if (data.length === 0) {
+            //     feedEmpty.innerHTML +=
+            //         "<p class='text-white'>Tidak ada feed</p>";
+            // }
+            // mybutto(dataDetail);
+        })
+        .catch((err) => {
+            console.log(error);
+        });
+};
+
 // Search feed
 const searchFeed = (e) => {
     e.preventDefault();
@@ -50,12 +77,12 @@ const showFeed = (Feed) => {
 
 const createFeed = (feed) => {
     const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
-    let avatar = feed.user_detail.avatar ?
-        `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}` :
-        "/assets/images/img_profil_default.png";
-    let content = feed.file ?
-        `<img src="${urlContent}${feed.file}" class="img-content">` :
-        "";
+    let avatar = feed.user_detail.avatar
+        ? `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}`
+        : "/assets/images/img_profil_default.png";
+    let content = feed.file
+        ? `<img src="${urlContent}${feed.file}" class="img-content">`
+        : "";
     let date = moment(feed.created_at).locale("id").fromNow();
 
     if (feed.jenis === "FEED_VIDEO") {
@@ -108,7 +135,7 @@ const refresh = (e) => {
 let mybutton = document.getElementById("btn-back-to-top");
 
 // When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {
+window.onscroll = function () {
     scrollFunction();
 };
 
@@ -139,7 +166,7 @@ var btns = btnContainer.getElementsByClassName("btn-nav");
 
 // Loop through the buttons and add the active class to the current/clicked button
 for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
+    btns[i].addEventListener("click", function () {
         var current = document.getElementsByClassName("active");
         current[0].className = current[0].className.replace(" active", "");
         this.className += " active";
@@ -148,4 +175,5 @@ for (var i = 0; i < btns.length; i++) {
 
 document.addEventListener("DOMContentLoaded", () => {
     getAllFeeds();
+    getDetailedFeeds();
 });
