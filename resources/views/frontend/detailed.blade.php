@@ -94,8 +94,7 @@
             }
         }
     </style>
-    {{-- <div id="feeds"> --}}
-    <div>
+    <div id="detail-feeds">
         <div class=" bg-dark-gray text-white">
             <div class="cards">
                     <div class="d-flex align-items-center ">
@@ -114,40 +113,23 @@
                             <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
                         </div>
                     </div>
-                
+            </div>
+            <div class="bg">
+                <div class="d-flex justify-content-between align-items-start">
+                    <p>Semua Komentar</p>                        <i class="fa-solid fa-comment-dots comment-dots"></i>
                 </div>
-                <div class="bg">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <p>Semua Komentar</p>
-                        <i class="fa-solid fa-comment-dots comment-dots"></i>
-                    </div>
-                    <div class="text-center comment">
-                        <i class="fa-solid fa-comments"></i>
-                        <p>Belum Ada Komentar</p>
-                         
-                    </div>
+                <div class="text-center comment">
+                    <i class="fa-solid fa-comments"></i>
+                    <p>Belum Ada Komentar</p>
                 </div>
+            </div>
         </div>
-        {{-- <div class="row cards bg-dark-gray text-white ">
-            <div class="col-6 d-flex">
-                <img src="{{ asset('assets/images/content.jpg') }}" class="img-content"/>
-            </div>
-            <div class="col-6 d-flex align-items-start ">
-                <img src="{{ asset('assets/images/logo.png') }}" class="logo-avatar">
-                <div class="d-flex flex-column ms-3">
-                    <span>${feed.user_detail.name}</span>
-                    <span>${date}</span>
-                    <p class="mt-1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus omnis porro totam labore necessitatibus tempore voluptate provident dicta nihil nobis!</p>
-                    <div class="d-flex flex-row">
-                        <button class="btn-topics-PU d-flex align-items-center"><i class="fa-solid fa-heart me-2"></i>${feed.like}</button>
-                        <button class="btn-topics-PU d-flex align-items-center"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
 
 </section>
+
+<script>
+</script>
 
 @endsection
 
