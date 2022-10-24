@@ -73,7 +73,7 @@
             font-size: 1.4rem;
             }
 
-         
+
         }
         @media only screen and (min-width: 600px) {
             .topics {
@@ -110,24 +110,24 @@
 
 @endsection
 
-@section('js') 
+@section('js')
 <script type="text/javascript">
 
     const Detailfeeds = document.querySelector("#detail-feeds");
     const getDetailfeeds = () => {
-    const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
+        const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
 
-    fetch(linkDetailFeeds)
-        .then((response) => {
-            return response.json();
-        })
-        .then((responseJson) => {
-            const data = responseJson.feed;
-            console.log(data)
-        })
-        .catch((err) => {
-            console.log(error);
-        });
+        fetch(linkDetailFeeds)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJson) => {
+                const data = responseJson.feed;
+                console.log(data)
+            })
+            .catch((err) => {
+                console.log(error);
+            });
     };
 
     const showDetailfeeds = (Detailfeeds) => {
@@ -147,7 +147,7 @@
                     </video>`;
     }
 
-    return `<div class=" bg-dark-gray text-white"> 
+    return `<div class=" bg-dark-gray text-white">
                 <div class="cards">
                     <div class="d-flex align-items-center ">
                         <img src="${avatar}" class="logo-avatar">
@@ -167,11 +167,9 @@
                     </div>
                 </div>
             </div>`;
-};
+    };
 
-document.addEventListener("DOMContentLoaded", () => {
-    getDetailfeeds();
-});
+    getDetailfeeds()
 
 </script>
 
