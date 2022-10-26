@@ -12,6 +12,10 @@
             background: #333333;
         }
 
+        .bg-rad {
+            border-radius: 1rem;
+        }
+
         .logo-avatar {
             border-radius: 50%;
             width: 50px;
@@ -40,7 +44,7 @@
         .bg {
             background-color: #54535354;
             border-radius: 4rem 4rem 0 0;
-            padding: 2rem;
+            /* padding: 2rem; */
             color: #B59D1F;
         }
 
@@ -54,6 +58,12 @@
         }
         .comment {
             font-size: 13rem;
+        }
+
+        .card-coments {
+            background: #444444;
+            border-radius: 3rem 3rem 0 0;
+            padding: 2rem;
         }
         @media only screen and (max-width: 600px) {
             .topics {
@@ -95,18 +105,24 @@
         }
     </style>
         <div>
-            <div class="bg">
+            <div class="bg rounded-5">
                  <div id="detail-feeds">
              </div>
-                <div class="d-flex justify-content-between align-items-start">
-                    <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
-                </div>
-                <div class="text-center comment">
-                    <i class="fa-solid fa-comments"></i>
-                    <p>Belum Ada Komentar</p>
-                </div>
+             <div class="card-coments"> 
+                 <div class="d-flex justify-content-between align-items-start">
+                     <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
+                 </div>
+                 <div class="text-center comment">
+                     <i class="fa-solid fa-comments"></i>
+                     <p>Belum Ada Komentar</p>
+                 </div>
+             </div>
+            </div>
+            <div>
+                
             </div>
         </div>
+
 
 </section>
 
@@ -116,8 +132,9 @@
 <script type="text/javascript">
 
     const Detailfeeds = document.querySelector("#detail-feeds");
+    
     const getDetailfeeds = () => {
-        const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
+        const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=${id}`;
 
         fetch(linkDetailFeeds)
             .then((response) => {
@@ -134,38 +151,39 @@
     };
 
     const showDetailfeeds = (feed) => {
-    const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
-    let avatar = Detailfeeds.user_detail.avatar
-        ? `https://api.pcctabessmg.xyz/${Detailfeeds.user_detail.avatar}`
-        : "/assets/images/img_profil_default.png";
-    let content = Detailfeeds.file
-        ? `<img src="${urlContent}${Detailfeeds.file}" class="img-content">`
-        : "";
-    let date = moment(Detailfeeds.created_at).locale("id").fromNow();
+                console.log(feed)
 
-    if (Detailfeeds.jenis === "FEED_VIDEO") {
+    const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
+    let avatar = feed.user_detail.avatar
+        ? `https://api.pcctabessmg.xyz/${feed.user_detail.avatar}`
+        : "/assets/images/img_profil_default.png";
+    let content = feed.file
+        ? `<img src="${urlContent}${feed.file}" class="img-content">`
+        : "";
+    let date = moment(feed.created_at).locale("id").fromNow();
+
+    if (feed.jenis === "FEED_VIDEO") {
         content = `<video class="img-content" controls>
-                        <source src="${urlContent}${Detailfeeds.file}" type="video/mp4">
+                        <source src="${urlContent}${feed.file}" type="video/mp4">
                         Your browser does not support HTML video.
                     </video>`;
     }
 
-    return `<div class=" bg-dark-gray text-white">
+    return `<div class="text-white rounded-5 ">
                 <div class="cards">
                     <div class="d-flex align-items-center ">
                         <img src="${avatar}" class="logo-avatar">
                         <div class="d-flex flex-column ms-3">
-                            <span>${Detailfeeds.user_detail.name}</span>
+                            <span>${feed.user_detail.name}</span>
                             <span>${date}</span>
                         </div>
                     </div>
                     <div>
-                        <p class="mt-1">${Detailfeeds.caption}</p>
-                        <img src="{{ asset('assets/images/content.jpg') }}" class="img-content"/>
+                        <p class="mt-1">${feed.caption}</p>
                         ${content}
                         <div class="btn-group-topics">
-                            <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>${Detailfeeds.like}</button>
-                            <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${Detailfeeds.comment_count}</button>
+                            <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>${feed.like}</button>
+                            <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
                         </div>
                     </div>
                 </div>

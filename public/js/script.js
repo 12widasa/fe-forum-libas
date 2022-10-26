@@ -20,23 +20,6 @@ const getType = (value) => {
     getAllFeeds();
 };
 
-// const getDetailFeed = () => {
-//     feedEmpty.innerHTML = "";
-//     const linkAllFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=2522`;
-
-//     fetch(linkAllFeeds)
-//         .then((response) => {
-//             return response.json();
-//         })
-//         .then((responseJson) => {
-//             const data = responseJson.feed;
-//             console.log(data)
-//         })
-//         .catch((err) => {
-//             console.log(error);
-//         });
-// };
-
 const getAllFeeds = () => {
     feedEmpty.innerHTML = "";
     const linkAllFeeds = `https://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=${currentPage}&keyword=${keyword}&type=${type}`;
@@ -82,7 +65,8 @@ const createFeed = (feed) => {
                     </video>`;
     }
 
-    return `<div class="cards bg-dark-gray text-white">
+    return `<a href="{{ route('show', $data->id) }}">
+                <div class="cards bg-dark-gray text-white" >
                     <div class="d-flex align-items-center ">
                         <img src="${avatar}" class="logo-avatar">
                         <div class="d-flex flex-column ms-3">
@@ -98,7 +82,8 @@ const createFeed = (feed) => {
                             <button class="btn-topics"><i class="fa-solid fa-comment me-2"></i>${feed.comment_count}</button>
                         </div>
                     </div>
-                </div>`;
+                </div>
+            </a>`;
 };
 
 // Infinite scroll

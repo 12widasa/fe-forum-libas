@@ -14,4 +14,7 @@ class FrontendController extends Controller
     {
         return view('frontend.detailed');
     }
+    public function show ($id) {
+        return $id;
+    }
 }
