@@ -10,9 +10,10 @@ class FrontendController extends Controller
     {
         return view('frontend.index');
     }
-    public function detailed()
+    public function detailed($id)
     {
-        return view('frontend.detailed');
+        $feedId = $id;
+        return view('frontend.detailed', compact('feedId'));
     }
     public function show ($id) {
         return $id;

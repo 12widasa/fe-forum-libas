@@ -108,7 +108,7 @@
             <div class="bg rounded-5">
                  <div id="detail-feeds">
              </div>
-             <div class="card-coments"> 
+             <div class="card-coments">
                  <div class="d-flex justify-content-between align-items-start">
                      <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
                  </div>
@@ -119,7 +119,7 @@
              </div>
             </div>
             <div>
-                
+
             </div>
         </div>
 
@@ -132,7 +132,8 @@
 <script type="text/javascript">
 
     const Detailfeeds = document.querySelector("#detail-feeds");
-    
+    const id = {!! json_encode($feedId) !!}
+
     const getDetailfeeds = () => {
         const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=${id}`;
 
