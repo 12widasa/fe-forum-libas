@@ -158,6 +158,31 @@
         #btn-back-to-top:hover {
             background: #FFC400;
         }
+
+        /* creating css loader */
+
+        #loading {
+            width: 2rem;
+            height: 2rem;
+            border: 5px solid #b2b2b2c1;
+            border-top: 6px solid #fedf2c;
+            border-radius: 100%;
+            margin: auto;
+            visibility: hidden;
+            animation: spin 1s infinite linear;
+        }
+        #loading.display {
+            visibility: visible;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         @media only screen and (max-width: 600px) {
             .topics {
                 padding: 0 7%;
@@ -190,6 +215,7 @@
     <div id="feeds">
     </div>
     <div id="feed-empty"></div>
+    <div id="loading"></div>
     <button
             type="button"
             class="btn btn-danger btn-floating btn-lg"

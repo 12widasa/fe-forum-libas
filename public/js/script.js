@@ -4,6 +4,21 @@ let keyword = "";
 const search = document.querySelector("#search");
 const feeds = document.querySelector("#feeds");
 const feedEmpty = document.querySelector("#feed-empty");
+const loader = document.querySelector("#loading");
+
+// showing loading
+function displayLoading() {
+    loader.classList.add("display");
+    // to stop loading after some time
+    setTimeout(() => {
+        loader.classList.remove("display");
+    }, 5000);
+}
+
+// hiding loading
+function hideLoading() {
+    loader.classList.remove("display");
+}
 
 // Search feed
 const searchFeed = (e) => {
@@ -24,6 +39,7 @@ const getAllFeeds = () => {
     feedEmpty.innerHTML = "";
     const linkAllFeeds = `https://api-feed.pcctabessmg.xyz/api/fd/get_cari_feed_web.php?page=${currentPage}&keyword=${keyword}&type=${type}`;
 
+    displayLoading();
     fetch(linkAllFeeds)
         .then((response) => {
             return response.json();
@@ -34,6 +50,7 @@ const getAllFeeds = () => {
                 feedEmpty.innerHTML +=
                     "<p class='text-white'>Tidak ada feed</p>";
             }
+            hideLoading();
             showFeed(data);
         })
         .catch((err) => {

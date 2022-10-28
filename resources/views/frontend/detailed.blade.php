@@ -87,6 +87,31 @@
         .all-comments .nama {
             font-size: 13px;
         }
+
+        /* creating css loader */
+
+        #loading {
+            width: 2rem;
+            height: 2rem;
+            border: 5px solid #b2b2b2c1;
+            border-top: 6px solid #fedf2c;
+            border-radius: 100%;
+            margin: auto;
+            visibility: hidden;
+            animation: spin 1s infinite linear;
+        }
+        #loading.display {
+            visibility: visible;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         @media only screen and (max-width: 600px) {
             .topics {
                 padding: 0 7%;
@@ -135,36 +160,22 @@
         </div>
     </a>
 </nav>
-
     <div class="topics pt-4">
+
         <div>
             <div class="bg rounded-5">
-                 <div id="detail-feeds">
-             </div>
+                <div id="detail-feeds">                
+                </div>
+                <div id="loading"></div>
              <div class="card-coments" id="comments">
                  <div class="d-flex justify-content-between align-items-start">
                      <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
                  </div>
-                 {{-- <div class="text-center comment">
-                     <i class="fa-solid fa-comments"></i>
-                     <p>Belum Ada Komentar</p>
-                 </div> --}}
-                 {{-- <div class="d-flex align-items-start all-comments">
-                    <img src="{{ asset('assets/images/content.jpg') }}" class="logo-avatar me-3" alt="" >
-                    <img src="${avatar}" class="logo-avatar me-2">
-                    <div>
-                        <span>${feed.user_detail.name}</span>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident suscipit impedit rem, sequi tempora porro ducimus incidunt dolorem ipsam quibusdam?</p>
-                        <span>${date}</span>
-                    </div>
-                </div> --}}
              </div>
-            </div>
-            <div>
-
             </div>
         </div>
     </div>
+
 </section>
 
 @endsection
@@ -174,12 +185,29 @@
 
     const Detailfeeds = document.querySelector("#detail-feeds");
     const Comments = document.querySelector("#comments");
+    const loader = document.querySelector("#loading");
+
+    // showing loading
+function displayLoading() {
+    loader.classList.add("display");
+    // to stop loading after some time
+    setTimeout(() => {
+        loader.classList.remove("display");
+        }, 5000);
+    }
+
+    // hiding loading
+    function hideLoading() {
+        loader.classList.remove("display");
+    }
+
     
     const id = {!! json_encode($feedId) !!}
 
     const getDetailfeeds = () => {
         const linkDetailFeeds = `http://api-feed.pcctabessmg.xyz/api/fd/get_feed_by_id_web.php?id=${id}`;
 
+        displayLoading();
         fetch(linkDetailFeeds)
             .then((response) => {
                 return response.json();
@@ -188,6 +216,7 @@
                 const data = responseJson.feed[0]
                 var html = showDetailfeeds(data);
                 Detailfeeds.innerHTML += html;
+                hideLoading();          
             })
             .catch((err) => {
                 console.log(error);
