@@ -1,12 +1,111 @@
+@include('layouts.includes.navbar-feed-libas') 
 @extends('layouts.app')
+
 
 @section('content')
 
-<section class=" topics">
+<section class=" topics pt-4">
     <style>
+
+        /* navbar */
+
+        .navbar>.container-fluid {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .global-navbar {
+        background: #1b1b1b;
+        }
+
+        .btn-group-nav {
+            display: flex;
+            justify-content: center;
+            height: 13rem;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .btn-group {
+            gap: 8px;
+            display: flex;
+            overflow-x: auto;
+            padding: 0 12px;
+            margin-top: 1rem;
+            padding-bottom: 2rem;
+        }
+        .btn-nav {
+            border-radius: 10px;
+            background-color: #333333;
+            color: white;
+            border: none;
+            padding: 0.5rem 0.8rem;
+        }
+        .btn-nav:hover {
+            background-color: #fedf2c;
+        }
+        .active {
+            background-color: #fedf2c;
+        }
+        .btn-outline-success {
+            color: #fedf2c;
+            border: 1px solid #fedf2c;
+        }
+        .btn-outline-success:hover {
+            background-color: #fedf2c;
+        }
+        .btn-outline-success:active {
+            background-color: #fedf2c !important    ;
+        }
+
+        .img span {
+            margin-left: 1rem;
+            line-height: 20px;
+            font-weight: 600;
+        }
+        .img-responsive {
+            max-width: 5rem;
+            height: auto;
+
+        }
+
+
+        @media only screen and (max-width: 600px) {
+            .img span {
+                display: none;
+            }
+            .nav-up{
+                padding: 0 1rem;
+            }
+            .topics {
+                padding: 0 10%;
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            .nav-up{
+                padding: 0 2rem ;
+            }
+        }
+
+        @media only screen and (min-width: 992px) {
+            .nav-up{
+                padding: 0 4rem ;
+            }
+        }
+
+
+        /* content-index */
+        
+        a {
+            text-decoration: none;
+        }
+        
         .cards {
             padding: 1.5rem;
-            margin: 1.5rem 0;
+            margin-bottom: 1.5rem;
         }
         .bg-dark-gray {
             background: #333333;
@@ -22,6 +121,8 @@
         }
         .topics {
             min-height: 100vh;
+            padding-bottom: 2rem;
+
         }
         .btn-group-topics {
 
@@ -37,11 +138,6 @@
             gap: 1rem;
         }
 
-        .topics {
-            margin: 2rem 0 2rem 0;
-            padding-bottom: 2rem;
-        }
-
         #feed-empty {
             text-align: center;
             margin: 10rem 0;
@@ -52,6 +148,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
+            height: 50px;
             display: none;
             border: 1px solid #ffcb22;
             background-color: #FFCC22;

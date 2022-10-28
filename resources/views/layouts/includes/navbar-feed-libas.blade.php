@@ -8,7 +8,6 @@
         }
 
         .global-navbar {
-        /* background-color: #33333366; */
         background: #1b1b1b;
         }
 

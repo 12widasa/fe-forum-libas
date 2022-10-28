@@ -2,14 +2,24 @@
 
 @section('content')
 
-<section class=" topics">
-    <style>
+<section>
+<style>
+        a {
+            text-decoration: none;
+        }
+        .back-all-feeds {
+            color: white;
+            font-size: 20px;
+        }
         .cards {
             padding: 1.5rem;
-            margin-top: 1.5rem;
         }
         .bg-dark-gray {
             background: #333333;
+        }
+
+        .bg-darkness {
+            background-color: #1b1b1bf7;
         }
 
         .bg-rad {
@@ -23,9 +33,6 @@
         }
         .img-content {
             width: 100%;
-        }
-        .topics {
-            min-height: 100vh;
         }
         .btn-group-topics {
 
@@ -49,8 +56,7 @@
         }
 
         .bg p {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 16px;
         }
 
         .comment-dots {
@@ -64,6 +70,22 @@
             background: #444444;
             border-radius: 3rem 3rem 0 0;
             padding: 2rem;
+        }
+        .all-comments {
+            color: white;
+        }
+        .all-comments span {
+            color: #818181;
+            font-size: 12px
+        }
+        .all-comments p {
+            font-weight: 400;
+            font-size: 14px !important;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+        .all-comments .nama {
+            font-size: 13px;
         }
         @media only screen and (max-width: 600px) {
             .topics {
@@ -104,26 +126,45 @@
             }
         }
     </style>
+
+<nav class="d-flex bg-darkness">
+    <a href="{{ url('/') }}">
+        <div class="back-all-feeds d-flex align-items-center p-3">
+            <i class="fa-solid fa-chevron-left me-3"></i>
+            <span>Detail Feeds</span>
+        </div>
+    </a>
+</nav>
+
+    <div class="topics pt-4">
         <div>
             <div class="bg rounded-5">
                  <div id="detail-feeds">
              </div>
-             <div class="card-coments">
+             <div class="card-coments" id="comments">
                  <div class="d-flex justify-content-between align-items-start">
                      <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
                  </div>
-                 <div class="text-center comment">
+                 {{-- <div class="text-center comment">
                      <i class="fa-solid fa-comments"></i>
                      <p>Belum Ada Komentar</p>
-                 </div>
+                 </div> --}}
+                 {{-- <div class="d-flex align-items-start all-comments">
+                    <img src="{{ asset('assets/images/content.jpg') }}" class="logo-avatar me-3" alt="" >
+                    <img src="${avatar}" class="logo-avatar me-2">
+                    <div>
+                        <span>${feed.user_detail.name}</span>
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident suscipit impedit rem, sequi tempora porro ducimus incidunt dolorem ipsam quibusdam?</p>
+                        <span>${date}</span>
+                    </div>
+                </div> --}}
              </div>
             </div>
             <div>
 
             </div>
         </div>
-
-
+    </div>
 </section>
 
 @endsection
@@ -132,6 +173,8 @@
 <script type="text/javascript">
 
     const Detailfeeds = document.querySelector("#detail-feeds");
+    const Comments = document.querySelector("#comments");
+    
     const id = {!! json_encode($feedId) !!}
 
     const getDetailfeeds = () => {
@@ -149,6 +192,57 @@
             .catch((err) => {
                 console.log(error);
             });
+    };
+
+    const getComments = () => {
+        const linkComment = `http://api-feed.pcctabessmg.xyz/api/comments/get_comments_web.php?idpost=${id}`;
+
+        fetch(linkComment)
+            .then((response) => {
+                return response.json();
+            })
+            .then((responseJson) => {
+                const data = responseJson.list?.[0]
+                var html = responseJson.list.length > 0 ? 
+                showComments(data) : Comentsnone();
+                Comments.innerHTML += html;
+            })
+            .catch((err) => {
+                console.log(error);
+            });
+    };
+
+    const Comentsnone = () => {
+    return `<div class="text-center comment">
+            <i class="fa-solid fa-comments"></i>
+            <p>Belum Ada Komentar</p>
+            </div>`
+    }
+
+
+
+    const showComments = (list) => {
+        console.log(list);
+
+    const urlContent = "https://api-feed.pcctabessmg.xyz/files/";
+    let avatar = list.user_detail.avatar ?
+        `https://api.pcctabessmg.xyz/${list.user_detail.avatar}` :
+        "/assets/images/img_profil_default.png";
+    let content = list.file ?
+        `<img src="${urlContent}${list.file}" class="img-content">` :
+        "";
+    let date = moment(list.created_at).locale("id").fromNow();
+
+    return `<div class="d-flex align-items-start all-comments">
+                    <img src="${avatar}" class="logo-avatar me-2">
+                    <div>
+                        <span class="text-white nama">${list.user_detail.name}</span>
+                        <p>${list.komentar}</p>
+                        <span>${date}</span>
+                    </div>
+                </div>`
+
+
     };
 
     const showDetailfeeds = (feed) => {
@@ -180,7 +274,7 @@
                         </div>
                     </div>
                     <div>
-                        <p class="mt-1">${feed.caption}</p>
+                        <p>${feed.caption}</p>
                         ${content}
                         <div class="btn-group-topics">
                             <button class="btn-topics"><i class="fa-solid fa-heart me-2"></i>${feed.like}</button>
@@ -192,8 +286,10 @@
     };
 
     getDetailfeeds()
+    getComments()
 
 </script>
 
 @endsection
 
+                 

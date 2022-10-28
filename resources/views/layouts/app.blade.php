@@ -16,15 +16,12 @@
 </style>
 <body>
     <div id="app" class="bg-darkness">
-        @include('layouts.includes.navbar-feed-libas')
-
         <main class="">
             @yield('content')
         </main>
     </div>
     <style>
         .bg-darkness {
-            /* background: #1b1b1b; */
             background-color: #1b1b1bf7;
         }
     </style>
