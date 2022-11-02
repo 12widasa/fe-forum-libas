@@ -4,8 +4,17 @@
 
 <section>
 <style>
+        html {
+            height: 100%;
+        }
+        body {
+            min-height: 100%;
+        }
         a {
             text-decoration: none;
+        }
+        #app {
+            height: 100%;
         }
         .back-all-feeds {
             color: white;
@@ -97,12 +106,22 @@
             border-top: 6px solid #fedf2c;
             border-radius: 100%;
             margin: auto;
-            visibility: hidden;
+            display: none;
             animation: spin 1s infinite linear;
         }
-        #loading.display {
-            visibility: visible;
+
+        #comments, #content {
+            display: none;
         }
+
+        #loading.display {
+            margin-top: 10rem;
+        }
+
+        #loading.display, #content.display, #comments.display {
+            display: block;
+        }
+
         @keyframes spin {
             from {
                 transform: rotate(0deg);
@@ -145,6 +164,7 @@
         @media only screen and (min-width: 992px) {
             .topics {
                 padding: 0 20%;
+                height: 100%;
             }
             .cards {
             padding: 2rem;
@@ -161,12 +181,11 @@
     </a>
 </nav>
     <div class="topics pt-4">
-
-        <div>
+        <div id="loading"></div>
+        <div id="content">
             <div class="bg rounded-5">
-                <div id="detail-feeds">                
+                <div id="detail-feeds">
                 </div>
-                <div id="loading"></div>
              <div class="card-coments" id="comments">
                  <div class="d-flex justify-content-between align-items-start">
                      <p>Semua Komentar</p><i class="fa-solid fa-comment-dots comment-dots"></i>
@@ -186,22 +205,21 @@
     const Detailfeeds = document.querySelector("#detail-feeds");
     const Comments = document.querySelector("#comments");
     const loader = document.querySelector("#loading");
+    const content = document.querySelector("#content");
+    const comments = document.querySelector("#comments");
 
     // showing loading
-function displayLoading() {
-    loader.classList.add("display");
-    // to stop loading after some time
-    setTimeout(() => {
-        loader.classList.remove("display");
-        }, 5000);
+    function displayLoading() {
+        loader.classList.add("display");
     }
 
     // hiding loading
     function hideLoading() {
         loader.classList.remove("display");
+        comments.classList.add("display");
+        content.classList.add("display");
     }
 
-    
     const id = {!! json_encode($feedId) !!}
 
     const getDetailfeeds = () => {
@@ -213,10 +231,10 @@ function displayLoading() {
                 return response.json();
             })
             .then((responseJson) => {
+                hideLoading();
                 const data = responseJson.feed[0]
                 var html = showDetailfeeds(data);
                 Detailfeeds.innerHTML += html;
-                hideLoading();          
             })
             .catch((err) => {
                 console.log(error);
@@ -225,14 +243,17 @@ function displayLoading() {
 
     const getComments = () => {
         const linkComment = `http://api-feed.pcctabessmg.xyz/api/comments/get_comments_web.php?idpost=${id}`;
+        displayLoading();
 
         fetch(linkComment)
             .then((response) => {
                 return response.json();
             })
             .then((responseJson) => {
+                hideLoading();
+
                 const data = responseJson.list?.[0]
-                var html = responseJson.list.length > 0 ? 
+                var html = responseJson.list.length > 0 ?
                 showComments(data) : Comentsnone();
                 Comments.innerHTML += html;
             })
@@ -247,8 +268,6 @@ function displayLoading() {
             <p>Belum Ada Komentar</p>
             </div>`
     }
-
-
 
     const showComments = (list) => {
         console.log(list);
@@ -321,4 +340,3 @@ function displayLoading() {
 
 @endsection
 
-                 
